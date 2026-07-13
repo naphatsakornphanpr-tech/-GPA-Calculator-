@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เครื่องคำนวณเกรดเฉลี่ย (GPA Calculator)</title>
+    <title>เครื่องคำนวณเกรดสะสม (GPA & GPax Calculator)</title>
     <!-- นำเข้าฟอนต์ Outfit และ Sarabun จาก Google Fonts เพื่อความสวยงามทันสมัย -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,70 +21,61 @@
         <!-- ส่วนหัวของโปรแกรม -->
         <header class="app-header">
             <span class="badge">Academic Tool</span>
-            <h1>เครื่องคำนวณเกรดเฉลี่ย</h1>
-            <p class="subtitle">GPA Calculator (Vanilla JS Edition)</p>
+            <h1>เครื่องคำนวณเกรดสะสม</h1>
+            <p class="subtitle">Multi-Semester GPA & GPax Calculator</p>
         </header>
 
-        <!-- ส่วนของเครื่องมือคำนวณ -->
-        <section class="calculator-card">
-            <!-- ส่วนหัวตาราง/คอลัมน์อินพุต (สำหรับหน้าจอคอมพิวเตอร์) -->
-            <div class="row-header">
-                <span class="header-col col-name">ชื่อวิชา (ไม่บังคับ)</span>
-                <span class="header-col col-credits">หน่วยกิต</span>
-                <span class="header-col col-grade">เกรดที่ได้</span>
-                <span class="header-col col-action">จัดการ</span>
-            </div>
-
-            <!-- กล่องรายการวิชาที่จะถูกสร้างขึ้นมาในภายหลังด้วย JS -->
-            <div id="course-list" class="course-list">
-                <!-- เริ่มต้นจะไม่มีข้อมูลใดๆ เพื่อความยืดหยุ่นในการโหลดเริ่มต้น หรือปล่อยให้ JS เพิ่มให้เอง -->
-            </div>
-
-            <!-- ปุ่มควบคุมการเพิ่มและล้างข้อมูล -->
-            <div class="controls-container">
-                <button type="button" id="add-course-btn" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    เพิ่มรายวิชา
-                </button>
-                <button type="button" id="reset-btn" class="btn btn-secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-                    ล้างข้อมูลทั้งหมด
-                </button>
-            </div>
-        </section>
-
-        <!-- ส่วนแสดงผลลัพธ์การคำนวณ -->
-        <section id="result-card" class="result-card hidden">
-            <!-- การ์ดสรุปผลที่จะอัปเดตข้อมูลด้วย JS (Template Literal) -->
-            <div class="result-grid">
-                <div class="result-circle-wrapper">
-                    <div class="result-circle">
-                        <span id="gpa-display" class="gpa-value">0.00</span>
-                        <span class="gpa-label">GPA ของเทอมนี้</span>
+        <!-- แดชบอร์ดสรุปผลรวม (GPax Dashboard) ย้ายขึ้นมาด้านบนเพื่อความโดดเด่น -->
+        <section id="gpax-dashboard" class="gpax-dashboard">
+            <div class="dashboard-grid">
+                <!-- วงกลมเกรดเฉลี่ยสะสมทุกเทอม -->
+                <div class="gpa-circle-container">
+                    <div class="gpa-circle">
+                        <span id="gpax-display" class="gpa-value">0.00</span>
+                        <span class="gpa-label">GPax สะสมรวม</span>
                     </div>
                 </div>
-                <div class="result-info">
-                    <h2 class="result-title">ผลการคำนวณสะสม</h2>
+                <!-- รายละเอียดสรุปหน่วยกิตและจำนวนวิชา -->
+                <div class="dashboard-info">
+                    <h2 class="dashboard-title">สรุปผลการเรียนสะสมทุกเทอม</h2>
                     <div class="info-row">
-                        <span class="info-label">จำนวนวิชาที่คำนวณ:</span>
+                        <span class="info-label">จำนวนวิชาเรียนรวมทั้งหมด:</span>
                         <strong id="total-courses-display">0 วิชา</strong>
                     </div>
                     <div class="info-row">
-                        <span class="info-label">จำนวนหน่วยกิตรวบรวม:</span>
+                        <span class="info-label">หน่วยกิตสะสมที่คำนวณได้:</span>
                         <strong id="total-credits-display">0.0 หน่วยกิต</strong>
                     </div>
-                    <div id="status-badge-container" class="status-badge-container">
-                        <!-- สถานะประเมินผลจะถูกแทรกเข้ามาด้วย JS -->
+                    <div id="overall-status-badge" class="status-badge-container">
+                        <!-- สถานะรวมจะถูกแทรกด้วย JS -->
+                        <span class="status-badge">ยังไม่มีข้อมูลผลการเรียน</span>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- กล่องสำหรับเพิ่มปุ่มควบคุมระดับบนสุด (เพิ่มเทอมการศึกษา) -->
+        <div class="top-controls">
+            <button type="button" id="add-semester-btn" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                เพิ่มเทอมการศึกษา
+            </button>
+            <button type="button" id="reset-btn" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                ล้างข้อมูลทั้งหมด
+            </button>
+        </div>
+
+        <!-- รายการเทอมการศึกษาที่จะถูกวาดขึ้นแบบไดนามิกโดย JavaScript -->
+        <div id="semesters-container" class="semesters-container">
+            <!-- ข้อมูลแต่ละเทอมจะถูกสร้างขึ้นในรูปแบบการ์ดโดย JS -->
+        </div>
     </main>
 
-    <!-- เทมเพลตสำหรับหน้าเริ่มต้นแบบไม่มีข้อมูล เพื่อความสวยงาม -->
+    <!-- เทมเพลตเริ่มต้นกรณีไม่มีเทอมการศึกษาเลย -->
     <div id="empty-state" class="empty-state hidden">
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-        <p>ยังไม่มีรายวิชาในระบบ กรุณากดปุ่มเพื่อเริ่มต้นเพิ่มวิชาเรียน</p>
+        <p>ยังไม่มีภาคเรียนในระบบ กรุณากดปุ่ม "เพิ่มเทอมการศึกษา" เพื่อเริ่มต้นใช้งาน</p>
     </div>
 
     <!-- เชื่อมต่อไฟล์ JavaScript -->
