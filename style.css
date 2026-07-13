@@ -260,6 +260,12 @@ select.input-field {
     padding-right: 2.5rem;
 }
 
+/* แก้ไขปัญหาสีอักษรของเมนูตัวเลือก (Dropdown Options) มองไม่เห็นในระบบ Dark Mode */
+select.input-field option {
+    background-color: #0b0f19;
+    color: #f3f4f6;
+}
+
 /* --------------------------------------------------
    BUTTONS
    -------------------------------------------------- */

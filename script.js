@@ -19,6 +19,16 @@ const GRADE_POINTS = {
     'F': 0.0
 };
 
+// รายวิชาเริ่มต้นสำหรับสาขาวิศวกรรมคอมพิวเตอร์ (Default Computer Engineering Courses)
+// ใช้สำหรับแสดงข้อมูลตัวอย่างทันทีที่เข้าเว็บครั้งแรก
+const DEFAULT_CPE_COURSES = [
+    { name: 'CPE101 Computer Programming', credits: '3.0', grade: '' },
+    { name: 'CPE102 Digital Logic Design', credits: '3.0', grade: '' },
+    { name: 'MTH101 Calculus I', credits: '3.0', grade: '' },
+    { name: 'PHY101 Physics for Engineers', credits: '3.0', grade: '' }
+];
+
+
 // ค้นหา Element ต่างๆ จาก HTML เพื่อนำมาใช้งานใน JS (DOM Selection)
 const courseListContainer = document.getElementById('course-list');
 const addCourseBtn = document.getElementById('add-course-btn');
@@ -40,10 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
             addCourseRow(course.name, course.credits, course.grade);
         });
     } else {
-        // หากไม่มีข้อมูล ให้เพิ่มแถวเปล่า 3 แถวเพื่อพร้อมให้ผู้ใช้งานกรอกทันที
-        for (let i = 0; i < 3; i++) {
-            addCourseRow();
-        }
+        // หากไม่มีข้อมูล ให้เพิ่มวิชาพื้นฐานของวิศวกรรมคอมพิวเตอร์เป็นค่าเริ่มต้น
+        DEFAULT_CPE_COURSES.forEach(course => {
+            addCourseRow(course.name, course.credits, course.grade);
+        });
     }
     
     // คำนวณ GPA ทันทีหลังจากสร้างแถวเริ่มต้นเสร็จ
@@ -233,10 +243,10 @@ function resetAll() {
         // ล้างข้อมูลที่เซฟไว้ใน LocalStorage
         localStorage.removeItem('gpa_calculator_courses');
         
-        // สร้างแถวเปล่าขึ้นมาใหม่ 3 แถวเพื่อเป็นค่าเริ่มต้นใหม่
-        for (let i = 0; i < 3; i++) {
-            addCourseRow();
-        }
+        // สร้างแถวรายวิชาวิศวกรรมคอมพิวเตอร์เริ่มต้นขึ้นมาใหม่
+        DEFAULT_CPE_COURSES.forEach(course => {
+            addCourseRow(course.name, course.credits, course.grade);
+        });
         
         // คำนวณและอัปเดตหน้าจอใหม่
         calculateGPA();
