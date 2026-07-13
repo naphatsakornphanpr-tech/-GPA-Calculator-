@@ -1,0 +1,559 @@
+/* --------------------------------------------------
+   GLOBAL DESIGN SYSTEM & VARIABLES
+   -------------------------------------------------- */
+:root {
+    /* จานสีแบบพรีเมียม (Harmonious Color Palette) */
+    --bg-primary: #0b0f19;
+    --bg-secondary: rgba(22, 28, 45, 0.6);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-focus: #6366f1;
+    
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    
+    /* สีสันสำหรับผลลัพธ์และปุ่ม */
+    --accent-purple: #818cf8;
+    --accent-pink: #ec4899;
+    --accent-blue: #3b82f6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    
+    /* เอฟเฟกต์เบลอแบบกระจก (Glassmorphism) */
+    --glass-blur: blur(12px);
+    --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    
+    /* ฟอนต์หลักของโปรเจกต์ */
+    --font-heading: 'Outfit', 'Sarabun', sans-serif;
+    --font-body: 'Sarabun', sans-serif;
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------
+   BASE RESET & LAYOUT
+   -------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+    padding: 2rem 1rem;
+}
+
+/* ของตกแต่งพื้นหลังให้ดูมีมิติ (Background Glows) */
+.background-decor {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.15;
+}
+
+.circle-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--accent-purple) 0%, transparent 80%);
+    top: -100px;
+    right: -50px;
+}
+
+.circle-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--accent-pink) 0%, transparent 80%);
+    bottom: -150px;
+    left: -100px;
+}
+
+/* --------------------------------------------------
+   APP CONTAINER & HEADER
+   -------------------------------------------------- */
+.app-container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    z-index: 1;
+}
+
+.app-header {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.badge {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--accent-purple);
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+}
+
+.app-header h1 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 2.5rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to right, #ffffff, #c7d2fe, #fbcfe8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.25rem;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* --------------------------------------------------
+   CALCULATOR CARD & GRID
+   -------------------------------------------------- */
+.calculator-card {
+    background: var(--bg-secondary);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    box-shadow: var(--shadow-premium);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+/* หัวข้อตารางสำหรับจอคอมพิวเตอร์ */
+.row-header {
+    display: grid;
+    grid-template-columns: 2.5fr 1.2fr 1.2fr 80px;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-col {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.header-col.col-action {
+    text-align: center;
+}
+
+/* กล่องแสดงผลรายการวิชา */
+.course-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+}
+
+/* สไตล์ Scrollbar สำหรับรายการวิชา */
+.course-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.course-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.course-list::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+/* --------------------------------------------------
+   COURSE INPUT ROW
+   -------------------------------------------------- */
+.course-row {
+    display: grid;
+    grid-template-columns: 2.5fr 1.2fr 1.2fr 80px;
+    gap: 1rem;
+    align-items: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ส่วนหัวสำหรับแสดงผลบนมือถือเท่านั้น (Mobile Labels) */
+.mobile-label {
+    display: none;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+/* ฟิลด์กรอกข้อมูล */
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* เลือกเกรดและหน่วยกิต */
+select.input-field {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+/* --------------------------------------------------
+   BUTTONS
+   -------------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.85rem 1.5rem;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ปุ่มลบวิชา */
+.btn-delete {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    margin: 0 auto;
+}
+
+.btn-delete:hover {
+    background: var(--danger);
+    color: #ffffff;
+    border-color: var(--danger);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.controls-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.controls-container .btn {
+    flex: 1;
+}
+
+/* --------------------------------------------------
+   EMPTY STATE
+   -------------------------------------------------- */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    text-align: center;
+    border: 2px dashed var(--border-color);
+    border-radius: 18px;
+}
+
+.empty-state svg {
+    stroke: var(--text-muted);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --------------------------------------------------
+   RESULT CARD
+   -------------------------------------------------- */
+.result-card {
+    background: linear-gradient(135deg, rgba(22, 28, 45, 0.8), rgba(11, 15, 25, 0.9));
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    box-shadow: var(--shadow-premium);
+    padding: 2rem;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.result-grid {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+/* วงกลมแสดงเกรด */
+.result-circle-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.result-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0,0,0,0) 70%);
+    border: 4px solid var(--accent-purple);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.3);
+    transition: var(--transition-smooth);
+}
+
+.gpa-value {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.gpa-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* ส่วนข้อความอธิบายในผลลัพธ์ */
+.result-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.result-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.5rem;
+}
+
+.info-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.info-row strong {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+/* ตราสัญลักษณ์ประเมินผล */
+.status-badge-container {
+    margin-top: 0.5rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.45rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* การเปลี่ยนสีตามเกรดเฉลี่ย */
+.status-excellent {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-good {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: var(--accent-blue);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.status-average {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-poor {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* --------------------------------------------------
+   RESPONSIVE DESIGN (สำหรับหน้าจอมือถือ)
+   -------------------------------------------------- */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem 0.5rem;
+    }
+
+    .app-header h1 {
+        font-size: 2rem;
+    }
+
+    /* ซ่อนหัวตารางบนจอคอม */
+    .row-header {
+        display: none;
+    }
+
+    /* แถวอินพุตเปลี่ยนเป็นแบบการ์ดย่อยซ้อนแนวตั้ง */
+    .course-row {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border-color);
+        padding: 1.25rem;
+        border-radius: 16px;
+        position: relative;
+    }
+
+    .mobile-label {
+        display: block;
+    }
+
+    /* จัดปุ่มลบให้อยู่มุมขวาบนของการ์ดแถววิชาบนมือถือ */
+    .btn-delete {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 38px;
+        height: 38px;
+        margin: 0;
+    }
+
+    /* ดันอินพุตชื่อวิชาหลบปุ่มลบ */
+    .course-row .input-group:first-child {
+        padding-right: 3rem;
+    }
+
+    /* ปรับ Layout สรุปผล */
+    .result-grid {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .result-info {
+        width: 100%;
+    }
+}
